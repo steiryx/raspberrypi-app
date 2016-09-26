@@ -3,22 +3,23 @@ from time import sleep
 
 camera = PiCamera()
 
+camera.rotation = 270
 #maximum resolution is 2592 x 1944 for still photos
 #and 1920 x 1080 for video recording
 #need to set the frame rate to 15 to enable this maximum resolution:
 #minimum resolution allowed is 64 x 64
-camera.resolution = (2592, 1944)
-camera.framerate = 15
-camera.start_preview()
-sleep(5)
-camera.capture('/home/pi/Desktop/max.jpg')
-camera.stop_preview()
+#camera.resolution = (2592, 1944)
+#camera.framerate = 15
+#camera.start_preview()
+#sleep(5)
+#camera.capture('/home/pi/Documents/raspberrypi-app/max.jpg')
+#camera.stop_preview()
 
 #add text to your image
 #camera.start_preview()
 #camera.annotate_text = "Hello world!"
 #sleep(5)
-#camera.capture('/home/pi/Desktop/text.jpg')
+#camera.capture('/home/pi/Documents/raspberrypi-app/text.jpg')
 #camera.stop_preview()
 
 #alter the brightness setting, which can be set from 0 to 100.
@@ -31,6 +32,7 @@ camera.stop_preview()
 #camera.stop_preview()
 
 #same for the contrast:
+#camera.annotate_text_size = 160
 #camera.start_preview()
 #for i in range(100):
 #    camera.annotate_text = "Contrast: %s" % i
@@ -45,8 +47,8 @@ camera.stop_preview()
 #annotation colours
 #from picamera import PiCamera, Color
 #camera.start_preview()
-#camera.annotate_background = Color('blue')
-#camera.annotate_foreground = Color('yellow')
+#camera.annotate_background = Color('yellow')
+#camera.annotate_foreground = Color('blue')
 #camera.annotate_text = " Hello world "
 #sleep(5)
 #camera.stop_preview()
@@ -57,9 +59,9 @@ camera.stop_preview()
 #colorswap, washedout, posterise, colorpoint, colorbalance, cartoon,
 #deinterlace1, and deinterlace2. The default is none.
 #camera.start_preview()
-#camera.image_effect = 'colorswap'
+#camera.image_effect = 'cartoon'
 #sleep(5)
-#camera.capture('/home/pi/Desktop/colorswap.jpg')
+#camera.capture('/home/pi/Documents/raspberrypi-app/cartoon.jpg')
 #camera.stop_preview()
 
 #Try looping over the various image effects in a preview
@@ -76,9 +78,10 @@ camera.stop_preview()
 #The default is auto.
 #loop over the available auto white balance modes with camera.AWB_MODES
 #camera.start_preview()
-#camera.awb_mode = 'sunlight'
-#sleep(5)
-#camera.capture('/home/pi/Desktop/sunlight.jpg')
+#for mode in camera.AWB_MODES:
+#    camera.awb_mode = mode
+#    camera.annotate_text = "Mode: %s" % mode
+#    sleep(5)
 #camera.stop_preview()
 
 #You can use camera.exposure_mode to set the exposure to a preset mode to
@@ -89,5 +92,11 @@ camera.stop_preview()
 #camera.start_preview()
 #camera.exposure_mode = 'beach'
 #sleep(5)
-#camera.capture('/home/pi/Desktop/beach.jpg')
+#camera.capture('/home/pi/Documents/raspberrypi-app/beach.jpg')
 #camera.stop_preview()
+camera.start_preview()
+for mode in camera.EXPOSURE_MODES:
+    camera.exposure_mode = mode
+    camera.annotate_text = "Exposure Mode: %s" % mode
+    sleep(5)
+camera.stop_preview()

@@ -12,7 +12,7 @@ camera = PiCamera()
 
 #You can alter the transparency of the camera preview by setting an alpha level:
 #alpha can be any value between 0 and 255.
-#camera.start_preview(alpha=200)
+#camera.start_preview(alpha=75)
 camera.start_preview()
 
 sleep(10)
