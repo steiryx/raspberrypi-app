@@ -6,9 +6,9 @@ BUTTON_TURN_DOWN = 22
 SERVO_PIN = 25
 ANGLE_CHANGE = 5
 
-MIN_ANGLE = 0
-MAX_ANGLE = 200 #added some tolerance from original value of 180
-angle = 10
+MIN_ANGLE = 30
+MAX_ANGLE = 210 #added some tolerance from original value of 180
+angle = MIN_ANGLE
 first_time = True
 
 def setup():
@@ -47,19 +47,20 @@ def turn_down(channel):
 def set_angle():
     global angle
     global pwm
-    print "Setting angle to ", angle, " degrees"
+    #print "Setting angle to ", angle, " degrees"
     # -90   1.0ms
     # 0     1.5ms
     # +90   2.0ms
-    #duty = float(angle) / 10.0 + 2.5
-    duty = float(angle) / 10.0 + 4.5
-    print "\t with duty:", duty
+    duty = float(angle) / 10.0 + 2.5
+    #duty = float(angle) / 10.0 + 4.5
+    #print "\t with duty:", duty
     pwm.ChangeDutyCycle(duty)
-    time.sleep(0.2)
+    time.sleep(0.05)
     pwm.ChangeDutyCycle(0)
-    time.sleep(0.8)
+    time.sleep(0.05)
     
 def loop():
+    global angle
     global first_time
     try:
         while True:
@@ -67,6 +68,23 @@ def loop():
                 #print "first time only"
                 first_time = False
                 set_angle()
+                time.sleep(2)
+            # can be remove for manual triggering
+            else:
+                if angle < MAX_ANGLE:
+                    done = False
+                    while not done:
+                        angle = angle + ANGLE_CHANGE
+                        set_angle()
+                        if angle > MAX_ANGLE:
+                            done = True
+                else:
+                    done = False
+                    while not done:
+                        angle = angle - ANGLE_CHANGE
+                        set_angle()
+                        if angle < MIN_ANGLE:
+                            done = True
             
     except KeyboardInterrupt:
         pass
